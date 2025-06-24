@@ -33,5 +33,4 @@ public class GlobalExceptionHandler {
         errors.put("message", "Email already exists");
         return ResponseEntity.badRequest().body(errors.toString());
     }
-
 }
