@@ -1,0 +1,13 @@
+### GET request to create a patient
+POST http://localhost:4000/patients
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "test@gmail.com",
+  "address": "123 street",
+  "dateOfBirth": "2004-08-08",
+  "registeredDate": "2025-06-13"
+}
+
+###
