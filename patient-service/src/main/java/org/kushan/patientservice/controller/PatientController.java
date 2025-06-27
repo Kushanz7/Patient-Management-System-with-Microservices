@@ -1,5 +1,7 @@
 package org.kushan.patientservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 import org.kushan.patientservice.dto.PatientRequestDTO;
@@ -15,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/patients")
+@Tag(name = "Patient Controller", description = "API for managing Patients")
 public class PatientController {
     private final PatientService patientService;
 
@@ -23,24 +26,28 @@ public class PatientController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all patients")
     public ResponseEntity<List<PatientResponseDTO>> getPatients(){
         List<PatientResponseDTO> patients = patientService.getPatients();
         return ResponseEntity.ok(patients);
     }
 
     @PostMapping
+    @Operation(summary = "Save a new patient")
     public ResponseEntity<PatientResponseDTO> savePatient(@Validated({Default.class, CreatePatientValidationGroup.class}) @RequestBody PatientRequestDTO patientRequestDTO){
         PatientResponseDTO patient = patientService.savePatient(patientRequestDTO);
         return ResponseEntity.ok(patient);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update an existing patient")
     public ResponseEntity<PatientResponseDTO> updatePatient(@PathVariable UUID id, @Valid @RequestBody PatientRequestDTO patientRequestDTO){
         PatientResponseDTO patient = patientService.updatePatient(id, patientRequestDTO);
         return ResponseEntity.ok(patient);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete an existing patient")
     public ResponseEntity<Void> deletePatient(@PathVariable UUID id){
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
