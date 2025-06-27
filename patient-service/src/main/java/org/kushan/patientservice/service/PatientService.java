@@ -3,16 +3,15 @@ package org.kushan.patientservice.service;
 import org.kushan.patientservice.dto.PatientRequestDTO;
 import org.kushan.patientservice.dto.PatientResponseDTO;
 import org.kushan.patientservice.exception.EmailAlreadyExistsException;
+import org.kushan.patientservice.exception.PatientNotFoundException;
 import org.kushan.patientservice.mapper.PatientMapper;
 import org.kushan.patientservice.model.Patient;
 import org.kushan.patientservice.repository.PatientRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.HashMap;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class PatientService {
@@ -43,12 +42,22 @@ public class PatientService {
         return PatientMapper.patientToPatientResponseDTO(newpatient);
     }
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<Map<String,String>> emailAlreadyExistsExceptionHandler(EmailAlreadyExistsException ex){
+    public PatientResponseDTO updatePatient(UUID id, PatientRequestDTO patientRequestDTO){
+        Patient patient = patientRepository.findById(id).orElseThrow(
+                () -> new PatientNotFoundException("Patient not found with id: " + id)
+        );
 
-        Map<String,String> errors = new HashMap<>();
-        errors.put("message", "Email already exists");
-        return ResponseEntity.badRequest().body(errors);
+        if (patientRepository.existsByEmail(patientRequestDTO.getEmail())){
+            throw new EmailAlreadyExistsException("Email already exists"+ patientRequestDTO.getEmail());
+        }
+
+        patient.setName(patientRequestDTO.getName());
+        patient.setAddress(patientRequestDTO.getAddress());
+        patient.setEmail(patientRequestDTO.getEmail());
+        patient.setDateOfBirth(LocalDate.parse(patientRequestDTO.getDateOfBirth()));
+
+        Patient updatedPatient = patientRepository.save(patient);
+        return PatientMapper.patientToPatientResponseDTO(updatedPatient);
     }
 
 }
