@@ -1,9 +1,12 @@
 package org.kushan.patientservice.service;
 
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.kushan.patientservice.dto.PatientRequestDTO;
 import org.kushan.patientservice.dto.PatientResponseDTO;
 import org.kushan.patientservice.exception.EmailAlreadyExistsException;
 import org.kushan.patientservice.exception.PatientNotFoundException;
+import org.kushan.patientservice.grpc.BillingServiceGrpcClient;
+import org.kushan.patientservice.kafka.kafkaProducer;
 import org.kushan.patientservice.mapper.PatientMapper;
 import org.kushan.patientservice.model.Patient;
 import org.kushan.patientservice.repository.PatientRepository;
@@ -15,10 +18,14 @@ import java.util.UUID;
 
 @Service
 public class PatientService {
+    private final kafkaProducer kafkaProducer;
     private PatientRepository patientRepository;
+    private final BillingServiceGrpcClient billingServiceGrpcClient;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, BillingServiceGrpcClient billingServiceGrpcClient, kafkaProducer kafkaProducer) {
         this.patientRepository = patientRepository;
+        this.billingServiceGrpcClient = billingServiceGrpcClient;
+        this.kafkaProducer = kafkaProducer;
     }
 
     public List<PatientResponseDTO> getPatients(){
@@ -39,6 +46,11 @@ public class PatientService {
         Patient newpatient = patientRepository.save(
                 PatientMapper.toModel(patientRequestDTO)
         );
+
+        billingServiceGrpcClient.createBillingAccount(newpatient.getId().toString(), newpatient.getName(), newpatient.getEmail());
+
+        kafkaProducer.sendEvent(newpatient);
+
         return PatientMapper.patientToPatientResponseDTO(newpatient);
     }
 
