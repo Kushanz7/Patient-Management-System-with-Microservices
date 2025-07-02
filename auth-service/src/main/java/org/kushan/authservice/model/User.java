@@ -3,7 +3,7 @@ package org.kushan.authservice.model;
 import jakarta.persistence.*;
 
 import java.util.UUID;
-
+//162fdcb0-6bee-47d6-82b5-5c6c326df1b9
 @Entity
 @Table(name = "users")
 public class User {
