@@ -20,15 +20,16 @@ export const Patients = () => {
 
         const fetchPatients = async () => {
             try {
-                const res = await getPatients(token);
-                // @ts-expect-error
-                setPatients(res.data);
+                const data = await getPatients();
+                setPatients(data);
             } catch (err) {
+                console.error(err);
                 setError('Failed to fetch patients');
             } finally {
                 setLoading(false);
             }
         };
+
 
         fetchPatients();
     }, [token, navigate]);

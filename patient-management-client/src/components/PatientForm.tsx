@@ -7,12 +7,14 @@ type PatientFormProps = {
 };
 
 export const PatientForm = ({ token, setPatients }: PatientFormProps) => {
-    const [formData, setFormData] = useState<Omit<Patient, 'id'>>({
+    const [formData, setFormData] = useState<Omit<Patient, 'id' | 'registeredDate'> & { registeredDate: string }>({
         name: '',
         email: '',
         address: '',
-        dateOfBirth: ''
+        dateOfBirth: '',
+        registeredDate: new Date().toISOString().split('T')[0], // Default to today
     });
+
     const [error, setError] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -20,7 +22,13 @@ export const PatientForm = ({ token, setPatients }: PatientFormProps) => {
         try {
             const res = await createPatient(formData, token);
             setPatients(prev => [...prev, res.data]);
-            setFormData({ name: '', email: '', address: '', dateOfBirth: '' });
+            setFormData({
+                name: '',
+                email: '',
+                address: '',
+                dateOfBirth: '',
+                registeredDate: new Date().toISOString().split('T')[0],
+            });
         } catch (err) {
             setError('Failed to create patient');
         }
@@ -35,26 +43,28 @@ export const PatientForm = ({ token, setPatients }: PatientFormProps) => {
                     type="text"
                     placeholder="Name"
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                 />
                 <input
                     type="email"
                     placeholder="Email"
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                 />
                 <input
                     type="text"
                     placeholder="Address"
                     value={formData.address}
-                    onChange={(e) => setFormData({...formData, address: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    required
                 />
                 <input
                     type="date"
                     value={formData.dateOfBirth}
-                    onChange={(e) => setFormData({...formData, dateOfBirth: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
+                    required
                 />
                 <button type="submit">Add Patient</button>
             </form>
