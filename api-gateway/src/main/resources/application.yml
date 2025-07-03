@@ -4,6 +4,19 @@ server:
 spring:
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
       routes:
         - id: auth-service-route
           uri: http://auth-service:4005
@@ -11,7 +24,6 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
-
 
         - id: patient-service-route
           uri: http://patient-service:4000
@@ -21,14 +33,12 @@ spring:
             - StripPrefix=1
             - JwtValidation
 
-
         - id: api-docs-patient-route
           uri: http://patient-service:4000
           predicates:
             - Path=/api-docs/patients
           filters:
             - RewritePath=/api-docs/patients,/v3/api-docs
-
 
         - id: api-docs-auth-route
           uri: http://auth-service:4005
