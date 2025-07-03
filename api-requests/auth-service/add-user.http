@@ -1,0 +1,16 @@
+### Add user
+
+POST http://localhost:4004/auth/api/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "doctor@example.com",
+  "password": "StrongPass123",
+  "role": "DOCTOR",
+  "fullName": "Dr. Kushan Rathnayake",
+  "specialization": "Cardiology",
+  "phoneNumber": "0771234567"
+}
+
+
