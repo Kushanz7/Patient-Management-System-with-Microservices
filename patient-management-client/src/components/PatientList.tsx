@@ -1,4 +1,5 @@
 import type {Patient} from '../api/patients';
+import {Link} from "react-router-dom";
 
 type PatientListProps = {
     patients: Patient[];
@@ -12,7 +13,9 @@ export const PatientList = ({ patients, onDelete }: PatientListProps) => {
             <ul>
                 {patients.map(patient => (
                     <li key={patient.id}>
-                        {patient.name} - {patient.email}
+                        <Link to={`/patients/${patient.id}`}>
+                            {patient.name}
+                        </Link> - {patient.email}
                         <button onClick={() => onDelete(patient.id)}>Delete</button>
                     </li>
                 ))}
