@@ -43,3 +43,7 @@ export const getDoctors = async (token: string) => {
     );
     return response.data;
 };
+
+export const getDoctorById = async (doctorId: string) => {
+    return axios.get(`http://localhost:4004/auth/api/users/doctors/${doctorId}`);
+};

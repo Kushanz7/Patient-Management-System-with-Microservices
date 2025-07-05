@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -30,4 +31,12 @@ public class UserController {
     public ResponseEntity<List<UserResponseDTO>> getAllDoctors() {
         return ResponseEntity.ok(userService.getUsersByRole("DOCTOR"));
     }
+
+    @GetMapping("/doctors/{id}")
+    public ResponseEntity<UserResponseDTO> getDoctorById(@PathVariable UUID id) {
+        return userService.getUserByIdAndRole(id, "DOCTOR")
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }

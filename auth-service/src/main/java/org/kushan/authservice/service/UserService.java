@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -59,4 +60,11 @@ public class UserService {
                 user.getPhoneNumber()
         );
     }
+
+    public Optional<UserResponseDTO> getUserByIdAndRole(UUID id, String role) {
+        return userRepository.findById(id)
+                .filter(user -> user.getRole().equalsIgnoreCase(role))
+                .map(this::mapToUserResponse);
+    }
+
 }
