@@ -1,13 +1,14 @@
 ### GET request to create a patient
-POST http://localhost:4000/patients
+POST http://localhost:4004/api/patients
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "name": "John Doe w kafka",
-  "email": "kafka_test@gmail.com",
+  "name": "John Doe w kafka analytics",
+  "email": "kafka_testanalytics@gmail.com",
   "address": "123 street",
-  "dateOfBirth": "2004-08-08",
-  "registeredDate": "2025-06-13"
+  "dateOfBirth": "2004-09-08",
+  "registeredDate": "2025-07-01"
 }
 
 ###
