@@ -1,0 +1,258 @@
+/* PatientDetail.css */
+
+.patient-detail-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+}
+
+.detail-title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+/* Loading State (reused from Patients.css, but defined here for self-containment) */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh; /* Adjust as needed */
+    background-color: #f0f2f5;
+    color: #333;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.spinner {
+    border: 6px solid #f3f3f3; /* Light grey */
+    border-top: 6px solid #007bff; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-message {
+    font-size: 1.2em;
+    color: #555;
+}
+
+.not-found-message {
+    text-align: center;
+    color: #dc3545; /* Red for error */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: #dc3545; /* Red for error */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.95em;
+}
+
+/* View Mode Styles */
+.detail-view {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between detail items */
+}
+
+.detail-item {
+    display: flex;
+    align-items: baseline; /* Align label and value nicely */
+    padding: 10px 0;
+    border-bottom: 1px dashed #e0e0e0; /* Subtle separator */
+}
+
+.detail-item:last-child {
+    border-bottom: none; /* No border for the last item */
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #555;
+    min-width: 120px; /* Align labels */
+    flex-shrink: 0;
+    font-size: 0.95em;
+}
+
+.detail-value {
+    color: #333;
+    font-size: 1em;
+    flex-grow: 1;
+}
+
+.edit-button {
+    background-color: #007bff; /* Primary action blue */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.05em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 30px;
+    align-self: flex-start; /* Align with text */
+    display: block; /* Make it a block element to control margin */
+    width: fit-content;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.edit-button:active {
+    background-color: #004085;
+    transform: translateY(0);
+}
+
+/* Edit Mode Form Styles (reusing PatientForm styles for consistency) */
+.detail-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-input::placeholder {
+    color: #a0a0a0;
+}
+
+.form-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.read-only-input {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    color: #777;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start; /* Align buttons with form elements */
+    margin-top: 20px;
+}
+
+.save-button {
+    background-color: #28a745; /* Green for save */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.save-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.save-button:active {
+    background-color: #1e7e34;
+    transform: translateY(0);
+}
+
+.cancel-button {
+    background-color: #6c757d; /* Muted grey for cancel */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cancel-button:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+.cancel-button:active {
+    background-color: #4e555b;
+    transform: translateY(0);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .patient-detail-container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .detail-title {
+        font-size: 1.5em;
+    }
+
+    .detail-label {
+        min-width: 90px; /* Adjust for smaller screens */
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .save-button,
+    .cancel-button,
+    .edit-button {
+        width: 100%;
+        max-width: none; /* Allow full width */
+        padding: 10px 20px;
+        font-size: 0.95em;
+    }
+}

@@ -1,0 +1,135 @@
+/* PatientList.css */
+
+.patient-list-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+}
+
+.list-title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.no-patients-message {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    border: 1px dashed #e0e0e0;
+}
+
+.patient-ul {
+    list-style: none; /* Remove default bullet points */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between list items */
+}
+
+.patient-li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f9fbfd; /* Light background for each item */
+    border: 1px solid #e0e6ea;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.patient-li:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+    border-color: #cce0ff; /* Subtle highlight on hover */
+}
+
+.patient-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allow details to take available space */
+}
+
+.patient-name-link {
+    font-size: 1.15em;
+    font-weight: 600;
+    color: #007bff; /* Primary link color */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.2s ease;
+}
+
+.patient-name-link:hover {
+    color: #0056b3; /* Darker on hover */
+    text-decoration: underline; /* Add underline on hover */
+}
+
+.patient-email {
+    font-size: 0.9em;
+    color: #6a7f8e; /* Subtler color for email */
+    margin-top: 4px;
+}
+
+.delete-button {
+    background-color: #dc3545; /* Red for destructive action */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-left: 20px; /* Space from details */
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+}
+
+.delete-button:active {
+    background-color: #bd2130;
+    transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .patient-li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .delete-button {
+        width: 100%; /* Full width button on smaller screens */
+        margin-left: 0;
+        margin-top: 10px; /* Space between details and button */
+    }
+
+    .patient-details {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .patient-list-container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .list-title {
+        font-size: 1.5em;
+    }
+}

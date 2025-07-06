@@ -1,0 +1,166 @@
+/* Patients.css */
+
+.patients-page-wrapper {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f0f2f5; /* Light grey background for the whole page */
+    min-height: 100vh;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+}
+
+.patients-header {
+    width: 100%;
+    max-width: 1200px; /* Max width for consistency */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 20px 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.page-title {
+    color: #2c3e50;
+    font-size: 2.2em;
+    font-weight: 700;
+    margin: 0; /* Reset default margin */
+}
+
+.logout-button {
+    background-color: #6c757d; /* Muted grey for logout */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.logout-button:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+.logout-button:active {
+    background-color: #4e555b;
+    transform: translateY(0);
+}
+
+.app-error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+    font-size: 1em;
+    box-sizing: border-box; /* Ensure padding doesn't push it wider */
+}
+
+.patients-content {
+    display: flex;
+    gap: 30px; /* Space between form and list */
+    width: 100%;
+    max-width: 1200px; /* Max width for content area */
+    justify-content: center; /* Center content if less than max-width */
+}
+
+.form-section,
+.list-section {
+    flex: 1; /* Allows them to take equal width */
+    min-width: 350px; /* Minimum width to prevent squishing */
+    /* Remove individual margins from PatientForm and PatientList if they are set to `auto` or large values,
+       as the flex gap will handle spacing. The components should ideally only contain their own "card" styles. */
+}
+
+/* Loading State Styles */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Take full viewport height */
+    background-color: #f0f2f5;
+    color: #333;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.spinner {
+    border: 6px solid #f3f3f3; /* Light grey */
+    border-top: 6px solid #007bff; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-message {
+    font-size: 1.2em;
+    color: #555;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .patients-content {
+        flex-direction: column; /* Stack form and list vertically */
+        align-items: center; /* Center them when stacked */
+    }
+
+    .form-section,
+    .list-section {
+        width: 100%; /* Take full width when stacked */
+        max-width: 500px; /* Or a reasonable max-width for smaller screens */
+    }
+
+    .patients-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 1.8em;
+    }
+}
+
+@media (max-width: 600px) {
+    .patients-page-wrapper {
+        padding: 20px 10px;
+    }
+
+    .patients-header {
+        padding: 15px;
+        margin-bottom: 30px;
+    }
+
+    .page-title {
+        font-size: 1.5em;
+    }
+
+    .logout-button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .app-error-message {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}

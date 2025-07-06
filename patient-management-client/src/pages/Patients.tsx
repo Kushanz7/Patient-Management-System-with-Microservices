@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { getPatients, deletePatient, type Patient } from '../api/patients';
 import { PatientForm } from '../components/PatientForm';
 import { PatientList } from '../components/PatientList';
+import './Patients.css'; // Import the new CSS file
 
 export const Patients = () => {
     const { token, logout } = useContext(AuthContext);
@@ -24,34 +25,53 @@ export const Patients = () => {
                 setPatients(data);
             } catch (err) {
                 console.error(err);
-                setError('Failed to fetch patients');
+                setError('Failed to fetch patients. Please try refreshing the page.');
             } finally {
                 setLoading(false);
             }
         };
 
-
         fetchPatients();
-    }, [token, navigate]);
+    }, [token, navigate]); // Added navigate to dependency array
 
     const handleDelete = async (id: string) => {
+        setError(''); // Clear previous errors
         try {
             await deletePatient(id, token!);
             setPatients(patients.filter(p => p.id !== id));
         } catch (err) {
-            setError('Failed to delete patient');
+            setError('Failed to delete patient. Please try again.');
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <div className="spinner"></div>
+                <p className="loading-message">Loading patients...</p>
+            </div>
+        );
+    }
 
     return (
-        <div>
-            <button onClick={logout}>Logout</button>
-            <h1>Patients</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <PatientForm token={token!} setPatients={setPatients} />
-            <PatientList patients={patients} onDelete={handleDelete} />
+        <div className="patients-page-wrapper">
+            <header className="patients-header">
+                <h1 className="page-title">Patient Management Dashboard</h1>
+                <button onClick={logout} className="logout-button">
+                    Logout
+                </button>
+            </header>
+
+            {error && <p className="app-error-message">{error}</p>}
+
+            <main className="patients-content">
+                <section className="form-section">
+                    <PatientForm token={token!} setPatients={setPatients} />
+                </section>
+                <section className="list-section">
+                    <PatientList patients={patients} onDelete={handleDelete} />
+                </section>
+            </main>
         </div>
     );
 };
