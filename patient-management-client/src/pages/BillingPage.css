@@ -1,0 +1,373 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f8fafc;
+    color: #1a202c;
+}
+
+.billing-page {
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.billing-container {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.billing-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.billing-header h1 {
+    color: #1a202c;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.billing-header p {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+/* Three Column Layout */
+.billing-content {
+    display: grid;
+    grid-template-columns: 350px 370px 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Left Column - Account Input & Balance */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.account-input-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-label {
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 0.5rem;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.account-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
+}
+
+.account-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background-color: white;
+}
+
+.account-input.error {
+    border-color: #ef4444;
+}
+
+.load-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+.load-button:hover:not(:disabled) {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+.load-button:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.balance-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.balance-header h2 {
+    color: #64748b;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.balance-amount {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+/* Middle Column - Actions */
+.actions-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.actions-section h3 {
+    color: #334155;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.amount-input-group {
+    margin-bottom: 1.5rem;
+}
+
+.amount-label {
+    display: block;
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 0.5rem;
+}
+
+.amount-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background-color: #374151;
+    color: white;
+}
+
+.amount-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.action-button {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.charge-button {
+    background-color: #10b981;
+    color: white;
+}
+
+.charge-button:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+}
+
+.pay-button {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.pay-button:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+/* Right Column - Transactions */
+.transactions-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h3 {
+    color: #334155;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.transaction-count {
+    color: #64748b;
+    font-size: 0.875rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+}
+
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.transaction-type {
+    font-weight: 500;
+    color: #334155;
+}
+
+.transaction-amount {
+    font-weight: 600;
+    color: #10b981;
+}
+
+.transaction-amount.negative {
+    color: #ef4444;
+}
+
+.no-transactions {
+    text-align: center;
+    padding: 2rem;
+    color: #64748b;
+}
+
+/* Loading Spinner */
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .billing-content {
+        grid-template-columns: 320px 340px 1fr;
+    }
+}
+
+@media (max-width: 1200px) {
+    .billing-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .transactions-section {
+        grid-column: 1 / -1;
+    }
+
+    .balance-card,
+    .actions-section {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .billing-content {
+        grid-template-columns: 1fr;
+    }
+
+    .actions-section,
+    .transactions-section {
+        grid-column: 1;
+    }
+
+    .billing-page {
+        padding: 1rem;
+    }
+
+    .billing-header h1 {
+        font-size: 2rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+}
