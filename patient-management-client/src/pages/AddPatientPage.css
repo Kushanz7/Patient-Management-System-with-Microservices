@@ -1,0 +1,115 @@
+/* AddPatientPage.css */
+.add-patient-page-wrapper {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.add-patient-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.add-patient-header .page-title {
+    color: #2c3e50;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.view-patients-button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+
+.view-patients-button:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.logout-button {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+}
+
+.logout-button:hover {
+    background: linear-gradient(135deg, #c82333, #bd2130);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+    transform: translateY(-2px);
+}
+
+.add-patient-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.form-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    padding: 40px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .add-patient-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+
+    .header-actions {
+        justify-content: center;
+    }
+
+    .add-patient-header .page-title {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .form-container {
+        padding: 30px 20px;
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 20px 15px;
+        margin: 0 5px;
+    }
+
+    .view-patients-button,
+    .logout-button {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+}
