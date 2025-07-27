@@ -1,121 +1,152 @@
+// src/components/PatientForm.tsx
 import { useState } from 'react';
+import { Form, Input, DatePicker, Button, Alert, Space } from 'antd';
 import { createPatient, type Patient } from '../api/patients';
-import './PatientForm.css'; // Import the CSS file
+import dayjs from 'dayjs';
 
 type PatientFormProps = {
     token: string;
-    setPatients: React.Dispatch<React.SetStateAction<Patient[]>>;
+    setPatients: (patient: Patient) => void;
 };
 
 export const PatientForm = ({ token, setPatients }: PatientFormProps) => {
-    const [formData, setFormData] = useState<Omit<Patient, 'id' | 'registeredDate'> & { registeredDate: string }>({
-        name: '',
-        email: '',
-        address: '',
-        dateOfBirth: '',
-        registeredDate: new Date().toISOString().split('T')[0], // Default to today
-    });
-
+    const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [success, setSuccess] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError(''); // Clear previous errors
-        setSuccessMessage(''); // Clear previous success messages
-
+    const handleSubmit = async (values: any) => {
+        setLoading(true);
+        setError('');
+        setSuccess('');
+        
         try {
+            const formData = {
+                ...values,
+                dateOfBirth: values.dateOfBirth.format('YYYY-MM-DD'),
+                registeredDate: dayjs().format('YYYY-MM-DD')
+            };
+
             const res = await createPatient(formData, token);
-            setPatients(prev => [...prev, res.data]);
-            setSuccessMessage('Patient added successfully!');
-            // Reset form
-            setFormData({
-                name: '',
-                email: '',
-                address: '',
-                dateOfBirth: '',
-                registeredDate: new Date().toISOString().split('T')[0],
-            });
+            setSuccess('Patient added successfully!');
+            setPatients(res.data);
+            form.resetFields();
         } catch (err) {
             setError('Failed to create patient. Please check your inputs and try again.');
-            setSuccessMessage('');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="patient-form-container">
-            <h2 className="form-title">Add New Patient</h2>
+        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+            {error && (
+                <Alert
+                    message="Error"
+                    description={error}
+                    type="error"
+                    showIcon
+                    closable
+                    onClose={() => setError('')}
+                />
+            )}
 
-            {error && <p className="error-message">{error}</p>}
-            {successMessage && <p className="success-message">{successMessage}</p>}
+            {success && (
+                <Alert
+                    message="Success"
+                    description={success}
+                    type="success"
+                    showIcon
+                    closable
+                    onClose={() => setSuccess('')}
+                />
+            )}
 
-            <form onSubmit={handleSubmit} className="patient-form">
-                <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        placeholder="John Doe"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        required
-                        className="form-input"
+            <Form
+                form={form}
+                layout="vertical"
+                onFinish={handleSubmit}
+                style={{ maxWidth: 600 }}
+            >
+                <Form.Item
+                    label="Name"
+                    name="name"
+                    rules={[
+                        { required: true, message: 'Please input patient name!' },
+                        { min: 2, message: 'Name must be at least 2 characters!' }
+                    ]}
+                >
+                    <Input placeholder="John Doe" />
+                </Form.Item>
+
+                <Form.Item
+                    label="Email"
+                    name="email"
+                    rules={[
+                        { required: true, message: 'Please input patient email!' },
+                        { type: 'email', message: 'Please enter a valid email!' }
+                    ]}
+                >
+                    <Input placeholder="john.doe@example.com" />
+                </Form.Item>
+
+                <Form.Item
+                    label="Address"
+                    name="address"
+                    rules={[
+                        { required: true, message: 'Please input patient address!' },
+                        { min: 5, message: 'Address must be at least 5 characters!' }
+                    ]}
+                >
+                    <Input.TextArea 
+                        placeholder="123 Main St, Anytown" 
+                        autoSize={{ minRows: 2, maxRows: 4 }}
                     />
-                </div>
+                </Form.Item>
 
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="john.doe@example.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        required
-                        className="form-input"
+                <Form.Item
+                    label="Date of Birth"
+                    name="dateOfBirth"
+                    rules={[
+                        { required: true, message: 'Please select date of birth!' },
+                        {
+                            validator: (_, value) => {
+                                if (value && value.isAfter(dayjs())) {
+                                    return Promise.reject('Date of birth cannot be in the future!');
+                                }
+                                return Promise.resolve();
+                            }
+                        }
+                    ]}
+                >
+                    <DatePicker 
+                        style={{ width: '100%' }}
+                        disabledDate={current => current && current.isAfter(dayjs())}
                     />
-                </div>
+                </Form.Item>
 
-                <div className="form-group">
-                    <label htmlFor="address">Address</label>
-                    <input
-                        type="text"
-                        id="address"
-                        placeholder="123 Main St, Anytown"
-                        value={formData.address}
-                        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                        required
-                        className="form-input"
+                <Form.Item
+                    label="Registration Date"
+                    name="registeredDate"
+                    initialValue={dayjs()}
+                >
+                    <DatePicker 
+                        style={{ width: '100%' }}
+                        disabled
                     />
-                </div>
+                </Form.Item>
 
-                <div className="form-group">
-                    <label htmlFor="dateOfBirth">Date of Birth</label>
-                    <input
-                        type="date"
-                        id="dateOfBirth"
-                        value={formData.dateOfBirth}
-                        onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-                        required
-                        className="form-input"
-                    />
-                </div>
-
-                {/* Registered Date is typically managed by the system, so it's read-only or hidden */}
-                <div className="form-group">
-                    <label htmlFor="registeredDate">Registered Date</label>
-                    <input
-                        type="date"
-                        id="registeredDate"
-                        value={formData.registeredDate}
-                        readOnly // Make it read-only as it defaults to today
-                        className="form-input"
-                        style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Indicate read-only
-                    />
-                </div>
-
-                <button type="submit" className="submit-button">Add Patient</button>
-            </form>
-        </div>
+                <Form.Item>
+                    <Button 
+                        type="primary" 
+                        htmlType="submit" 
+                        loading={loading}
+                        block
+                    >
+                        {loading ? 'Adding Patient...' : 'Add Patient'}
+                    </Button>
+                </Form.Item>
+            </Form>
+        </Space>
     );
 };

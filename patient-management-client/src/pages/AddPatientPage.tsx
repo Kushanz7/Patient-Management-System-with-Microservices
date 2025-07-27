@@ -3,38 +3,34 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { PatientForm } from '../components/PatientForm';
-import { message } from 'antd';
-import './AddPatientPage.css';
+import { Button, Card, Space, Typography } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+
+const { Title } = Typography;
 
 const AddPatientPage = () => {
     const { token } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSetPatients = () => {
-        message.success('Patient added successfully');
-        navigate('/patients/list');
+        //navigate('/patients/list');
     };
 
     return (
-        <div className="add-patient-page-wrapper">
-            <header className="add-patient-header">
-                <h1 className="page-title">Add New Patient</h1>
-                <div className="header-actions">
-                    <button
+        <Card>
+            <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <Space style={{ justifyContent: 'space-between', width: '100%' }}>
+                    <Title level={2}>Add New Patient</Title>
+                    <Button 
+                        icon={<ArrowLeftOutlined />}
                         onClick={() => navigate('/patients/list')}
-                        className="view-patients-button"
                     >
-                        View All Patients
-                    </button>
-                </div>
-            </header>
-
-            <main className="add-patient-content">
-                <div className="form-container">
-                    <PatientForm token={token!} setPatients={handleSetPatients} />
-                </div>
-            </main>
-        </div>
+                        Back to Patient List
+                    </Button>
+                </Space>
+                <PatientForm token={token!} setPatients={handleSetPatients} />
+            </Space>
+        </Card>
     );
 };
 
