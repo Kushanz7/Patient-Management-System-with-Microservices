@@ -1,43 +1,86 @@
-import React, { useState } from "react";
+import { Form, Select, DatePicker, TimePicker, Button, message } from 'antd';
+import { useState } from 'react';
 import { createAppointment } from "../../api/appointments";
+import dayjs from 'dayjs';
 
 const BookAppointmentForm = () => {
-    const [patientId, setPatientId] = useState("");
-    const [doctorId, setDoctorId] = useState("");
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
+    const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async (values: any) => {
+        setLoading(true);
         try {
             await createAppointment({
-                patientId,
-                doctorId,
-                appointmentDate: date,
-                appointmentTime: time,
+                patientId: values.patientId,
+                doctorId: values.doctorId,
+                appointmentDate: values.appointmentDate.format('YYYY-MM-DD'),
+                appointmentTime: values.appointmentTime.format('HH:mm'),
             });
-            alert("Appointment booked successfully!");
+            message.success('Appointment booked successfully!');
+            form.resetFields();
         } catch (err) {
-            alert("Failed to book appointment.");
+            message.error('Failed to book appointment.');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                placeholder="Patient ID"
-                value={patientId}
-                onChange={(e) => setPatientId(e.target.value)}
-            />
-            <input
-                placeholder="Doctor ID"
-                value={doctorId}
-                onChange={(e) => setDoctorId(e.target.value)}
-            />
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-            <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
-            <button type="submit">Book Appointment</button>
-        </form>
+        <Form
+            form={form}
+            onFinish={handleSubmit}
+            layout="vertical"
+            style={{ maxWidth: 600 }}
+        >
+            <Form.Item
+                label="Patient"
+                name="patientId"
+                rules={[{ required: true, message: 'Please select a patient!' }]}
+            >
+                <Select placeholder="Select patient">
+                    {/* Add patient options here */}
+                </Select>
+            </Form.Item>
+
+            <Form.Item
+                label="Doctor"
+                name="doctorId"
+                rules={[{ required: true, message: 'Please select a doctor!' }]}
+            >
+                <Select placeholder="Select doctor">
+                    {/* Add doctor options here */}
+                </Select>
+            </Form.Item>
+
+            <Form.Item
+                label="Appointment Date"
+                name="appointmentDate"
+                rules={[{ required: true, message: 'Please select a date!' }]}
+            >
+                <DatePicker 
+                    style={{ width: '100%' }}
+                    disabledDate={current => current && current.isBefore(dayjs().startOf('day'))}
+                />
+            </Form.Item>
+
+            <Form.Item
+                label="Appointment Time"
+                name="appointmentTime"
+                rules={[{ required: true, message: 'Please select a time!' }]}
+            >
+                <TimePicker 
+                    style={{ width: '100%' }} 
+                    format="HH:mm"
+                    minuteStep={15}
+                />
+            </Form.Item>
+
+            <Form.Item>
+                <Button type="primary" htmlType="submit" loading={loading} block>
+                    Book Appointment
+                </Button>
+            </Form.Item>
+        </Form>
     );
 };
 

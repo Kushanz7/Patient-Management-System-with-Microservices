@@ -1,6 +1,11 @@
+// src/components/Appointments/PatientAppointments.tsx
 import { useState } from "react";
+import { Input, Button, List, Card, Typography, Space, message, Tag, Empty } from 'antd';
+import { SearchOutlined, ClockCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { getAppointmentsByPatient } from "../../api/appointments";
 import { getDoctorById } from "../../api/users";
+
+const { Text } = Typography;
 
 type Appointment = {
     id: string;
@@ -10,25 +15,30 @@ type Appointment = {
     doctorArrivalTime?: string;
 };
 
-type DoctorMap = Record<string, string>; // doctorId -> name
+type DoctorMap = Record<string, string>;
 
 const PatientAppointments = () => {
     const [patientId, setPatientId] = useState("");
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [doctorNames, setDoctorNames] = useState<DoctorMap>({});
+    const [loading, setLoading] = useState(false);
 
     const fetchAppointments = async () => {
+        if (!patientId.trim()) {
+            message.warning('Please enter a patient ID');
+            return;
+        }
+
+        setLoading(true);
         try {
             const res = await getAppointmentsByPatient(patientId);
             setAppointments(res.data);
 
-            // Extract unique doctor IDs
-            const uniqueDoctorIds = Array.from(new Set(res.data.map((a: { doctorId: string; }) => a.doctorId))) as string[];
+            const uniqueDoctorIds = Array.from(
+                new Set(res.data.map((a: { doctorId: string }) => a.doctorId))
+            );
 
-            // Create a map of doctor IDs to names
             const namesMap: DoctorMap = {};
-
-
             await Promise.all(
                 uniqueDoctorIds.map(async (id: string) => {
                     try {
@@ -42,50 +52,66 @@ const PatientAppointments = () => {
 
             setDoctorNames(namesMap);
         } catch (error) {
-            console.error("Failed to load appointments:", error);
-            alert("Failed to load appointments.");
+            message.error('Failed to load appointments');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="patient-appointments">
-            <div className="search-container">
-                <input
-                    type="text"
+        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+            <Space.Compact style={{ width: '100%' }}>
+                <Input
                     placeholder="Enter Patient ID"
                     value={patientId}
                     onChange={(e) => setPatientId(e.target.value)}
-                    className="patient-id-input"
+                    prefix={<UserOutlined />}
                 />
-                <button
+                <Button 
+                    type="primary"
+                    icon={<SearchOutlined />}
                     onClick={fetchAppointments}
-                    disabled={!patientId.trim()}
-                    className="fetch-button"
+                    loading={loading}
                 >
                     Load Appointments
-                </button>
-            </div>
+                </Button>
+            </Space.Compact>
 
-            {appointments.length > 0 ? (
-                <ul className="appointments-list">
-                    {appointments.map((appointment) => (
-                        <li key={appointment.id} className="appointment-item">
-                            <div className="appointment-date">
-                                {appointment.appointmentDate} at {appointment.appointmentTime}
-                            </div>
-                            <div className="doctor-info">
-                                Doctor: {doctorNames[appointment.doctorId] || appointment.doctorId}
-                            </div>
-                            <div className="arrival-time">
-                                Arrival: {appointment.doctorArrivalTime || "Not arrived"}
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p className="no-appointments">No appointments found</p>
-            )}
-        </div>
+            <List
+                dataSource={appointments}
+                loading={loading}
+                locale={{
+                    emptyText: <Empty description="No appointments found" />
+                }}
+                renderItem={(appointment) => (
+                    <List.Item>
+                        <Card style={{ width: '100%' }}>
+                            <Space direction="vertical">
+                                <Space>
+                                    <ClockCircleOutlined />
+                                    <Text strong>
+                                        {appointment.appointmentDate} at {appointment.appointmentTime}
+                                    </Text>
+                                </Space>
+                                
+                                <Space>
+                                    <UserOutlined />
+                                    <Text>
+                                        Doctor: {doctorNames[appointment.doctorId] || appointment.doctorId}
+                                    </Text>
+                                </Space>
+
+                                <Tag color={appointment.doctorArrivalTime ? "success" : "warning"}>
+                                    {appointment.doctorArrivalTime 
+                                        ? `Arrived at ${appointment.doctorArrivalTime}`
+                                        : "Not arrived yet"}
+                                </Tag>
+                            </Space>
+                        </Card>
+                    </List.Item>
+                )}
+            />
+        </Space>
     );
 };
 
