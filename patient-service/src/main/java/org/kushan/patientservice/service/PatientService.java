@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class PatientService {
@@ -81,5 +83,12 @@ public class PatientService {
                 () -> new PatientNotFoundException("Patient not found with id: " + id)
         );
         return PatientMapper.patientToPatientResponseDTO(patient);
+    }
+    
+    public List<PatientResponseDTO> searchPatients(String query) {
+        List<Patient> patients = patientRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query);
+        return patients.stream()
+                .map(PatientMapper::patientToPatientResponseDTO)
+                .toList();
     }
 }

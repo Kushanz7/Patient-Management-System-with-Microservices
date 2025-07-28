@@ -60,4 +60,10 @@ public class PatientController {
         return ResponseEntity.ok(patient);
     }
 
+    @GetMapping("/search")
+    @Operation(summary = "Search patients", description = "Search patients based on a query string")
+    public ResponseEntity<List<PatientResponseDTO>> searchPatients(@RequestParam String query) {
+        List<PatientResponseDTO> patients = patientService.searchPatients(query);
+        return ResponseEntity.ok(patients);
+    }
 }

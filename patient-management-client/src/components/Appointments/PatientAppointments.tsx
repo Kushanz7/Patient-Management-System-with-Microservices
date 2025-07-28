@@ -1,9 +1,12 @@
-// src/components/Appointments/PatientAppointments.tsx
 import { useState } from "react";
-import { Input, Button, List, Card, Typography, Space, message, Tag, Empty } from 'antd';
+import { Select, Button, List, Card, Typography, Space, message, Tag, Empty } from 'antd';
 import { SearchOutlined, ClockCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { getAppointmentsByPatient } from "../../api/appointments";
 import { getDoctorById } from "../../api/users";
+import { searchPatients } from "../../api/patients";
+import debounce from 'lodash/debounce';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 const { Text } = Typography;
 
@@ -22,10 +25,33 @@ const PatientAppointments = () => {
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [doctorNames, setDoctorNames] = useState<DoctorMap>({});
     const [loading, setLoading] = useState(false);
+    const [fetchingPatient, setFetchingPatient] = useState(false);
+    const [patientOptions, setPatientOptions] = useState<{ label: string; value: string }[]>([]);
+    const { token } = useContext(AuthContext);
+
+    const handlePatientSearch = debounce(async (value: string) => {
+        if (!value.trim() || !token) return;
+
+        setFetchingPatient(true);
+        try {
+            const response = await searchPatients(value, token);
+            const patients = response.data;
+            setPatientOptions(
+                patients.map(patient => ({
+                    label: `${patient.name} (${patient.email})`,
+                    value: patient.id
+                }))
+            );
+        } catch (err) {
+            setPatientOptions([]);
+        } finally {
+            setFetchingPatient(false);
+        }
+    }, 500);
 
     const fetchAppointments = async () => {
-        if (!patientId.trim()) {
-            message.warning('Please enter a patient ID');
+        if (!patientId) {
+            message.warning('Please select a patient');
             return;
         }
 
@@ -61,11 +87,22 @@ const PatientAppointments = () => {
     return (
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
             <Space.Compact style={{ width: '100%' }}>
-                <Input
-                    placeholder="Enter Patient ID"
-                    value={patientId}
-                    onChange={(e) => setPatientId(e.target.value)}
-                    prefix={<UserOutlined />}
+                <Select
+                    style={{ width: '100%' }}
+                    showSearch
+                    placeholder="Search patient by name"
+                    loading={fetchingPatient}
+                    onSearch={handlePatientSearch}
+                    onChange={(value) => setPatientId(value)}
+                    options={patientOptions}
+                    filterOption={false}
+                    notFoundContent={fetchingPatient ? 'Searching...' : 'No patient found'}
+                    allowClear
+                    onClear={() => {
+                        setPatientId("");
+                        setPatientOptions([]);
+                        setAppointments([]);
+                    }}
                 />
                 <Button 
                     type="primary"

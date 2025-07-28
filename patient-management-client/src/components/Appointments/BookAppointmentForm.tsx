@@ -2,15 +2,23 @@ import { Form, Select, DatePicker, TimePicker, Button, message } from 'antd';
 import { useState, useEffect, useContext } from 'react';
 import { createAppointment } from "../../api/appointments";
 import { getDoctors } from "../../api/users";
-import { getPatientById } from "../../api/patients";
 import { AuthContext } from '../../context/AuthContext';
 import debounce from 'lodash/debounce';
 import dayjs from 'dayjs';
+// First, modify the imports to include searchPatients
+import { searchPatients } from "../../api/patients";
 
 interface Doctor {
     id: string;
     fullName: string;
     specialization: string;
+}
+
+interface AppointmentFormValues {
+    patientId: string;
+    doctorId: string;
+    appointmentDate: dayjs.Dayjs;
+    appointmentTime: dayjs.Dayjs;
 }
 
 const BookAppointmentForm = () => {
@@ -45,12 +53,14 @@ const BookAppointmentForm = () => {
 
         setFetchingPatient(true);
         try {
-            const response = await getPatientById(value, token);
-            const patient = response.data;
-            setPatientOptions([{
-                label: `${patient.name} (${patient.email})`,
-                value: patient.id
-            }]);
+            const response = await searchPatients(value, token);
+            const patients = response.data;
+            setPatientOptions(
+                patients.map(patient => ({
+                    label: `${patient.name} (${patient.email})`,
+                    value: patient.id
+                }))
+            );
         } catch (err) {
             setPatientOptions([]);
         } finally {
@@ -58,7 +68,7 @@ const BookAppointmentForm = () => {
         }
     }, 500);
 
-    const handleSubmit = async (values: any) => {
+    const handleSubmit = async (values: AppointmentFormValues) => {
         setLoading(true);
         try {
             await createAppointment({
@@ -69,7 +79,7 @@ const BookAppointmentForm = () => {
             });
             message.success('Appointment booked successfully!');
             form.resetFields();
-            setPatientOptions([]); // Clear patient options after successful submission
+            setPatientOptions([]);
         } catch (err) {
             message.error('Failed to book appointment.');
         } finally {
@@ -85,13 +95,13 @@ const BookAppointmentForm = () => {
             style={{ maxWidth: 600 }}
         >
             <Form.Item
-                label="Patient ID"
+                label="Patient Name"
                 name="patientId"
                 rules={[{ required: true, message: 'Please select a patient!' }]}
             >
                 <Select
                     showSearch
-                    placeholder="Enter patient ID"
+                    placeholder="Enter patient Name"
                     loading={fetchingPatient}
                     onSearch={handlePatientSearch}
                     options={patientOptions}

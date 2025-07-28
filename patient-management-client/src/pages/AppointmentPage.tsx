@@ -15,7 +15,7 @@ const AppointmentPage = () => {
         },
         {
             key: '2',
-            label: <span><ScheduleOutlined /> My Appointments</span>,
+            label: <span><ScheduleOutlined /> Search Appointments</span>,
             children: <PatientAppointments />,
         },
     ];
