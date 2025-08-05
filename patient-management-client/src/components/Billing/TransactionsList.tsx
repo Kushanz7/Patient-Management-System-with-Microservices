@@ -1,4 +1,8 @@
-import './TransactionsList.css';
+// TransactionsList.tsx
+import { List, Card, Typography } from 'antd';
+import { ArrowUpOutlined, ArrowDownOutlined, SwapOutlined } from '@ant-design/icons';
+
+const { Text } = Typography;
 
 type Transaction = {
     id: number;
@@ -8,49 +12,44 @@ type Transaction = {
 
 type Props = {
     transactions: Transaction[];
+    loading?: boolean;
 };
 
-const TransactionsList = ({ transactions }: Props) => {
+const TransactionsList = ({ transactions, loading }: Props) => {
     const getTransactionIcon = (type: string) => {
         switch (type.toLowerCase()) {
             case 'deposit':
-                return '↓';
+                return <ArrowDownOutlined style={{ color: '#52c41a' }} />;
             case 'withdrawal':
-                return '↑';
+                return <ArrowUpOutlined style={{ color: '#ff4d4f' }} />;
             case 'payment':
-                return '→';
+                return <SwapOutlined style={{ color: '#1890ff' }} />;
             default:
-                return '•';
+                return null;
         }
     };
 
     return (
-        <div className="transactions-container">
-            <h2 className="transactions-title">Transaction History</h2>
-            {transactions.length === 0 ? (
-                <div className="no-transactions">
-                    No transactions to display
-                </div>
-            ) : (
-                <div className="transactions-list">
-                    {transactions.map((tx) => (
-                        <div key={tx.id} className="transaction-item">
-                            <div className="transaction-icon">
-                                {getTransactionIcon(tx.type)}
-                            </div>
-                            <div className="transaction-details">
-                                <span className="transaction-type">
-                                    {tx.type}
-                                </span>
-                            </div>
-                            <div className={`transaction-amount ${tx.amount < 0 ? 'negative' : 'positive'}`}>
-                                ${Math.abs(tx.amount).toFixed(2)}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+        <List
+            loading={loading}
+            dataSource={transactions}
+            locale={{ emptyText: 'No transactions to display' }}
+            renderItem={(tx) => (
+                <List.Item>
+                    <Card style={{ width: '100%' }}>
+                        <List.Item.Meta
+                            avatar={getTransactionIcon(tx.type)}
+                            title={tx.type}
+                            description={
+                                <Text type={tx.amount < 0 ? 'danger' : 'success'}>
+                                    ${Math.abs(tx.amount).toFixed(2)}
+                                </Text>
+                            }
+                        />
+                    </Card>
+                </List.Item>
             )}
-        </div>
+        />
     );
 };
 

@@ -1,6 +1,6 @@
 import { Table, Button, Popconfirm, Typography, Space } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import type { Patient } from '../api/patients';
+import type { Patient } from '../../api/patients.ts';
 import { Link } from "react-router-dom";
 
 const { Text } = Typography;

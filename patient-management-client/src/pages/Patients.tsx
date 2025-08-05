@@ -2,8 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { getPatients, deletePatient, type Patient } from '../api/patients';
-import { PatientForm } from '../components/PatientForm';
-import { PatientList } from '../components/PatientList';
+import { PatientForm } from '../components/Patient/PatientForm.tsx';
+import { PatientList } from '../components/Patient/PatientList.tsx';
 import './Patients.css'; // Import the new CSS file
 
 export const Patients = () => {

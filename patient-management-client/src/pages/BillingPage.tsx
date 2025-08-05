@@ -1,25 +1,27 @@
-import { useEffect, useState, type SetStateAction} from "react";
-import {getBalance, getTransactions} from "../api/billing";
+// BillingPage.tsx
+import { useState } from "react";
+import { Layout, Card, Input, Button, Typography, Space, message, Statistic } from 'antd';
+import { SearchOutlined, DollarOutlined } from '@ant-design/icons';
+import { getBalance, getTransactions } from "../api/billing";
 import BillingActions from "../components/Billing/BillingActions";
 import TransactionsList from "../components/Billing/TransactionsList";
-import "./BillingPage.css";
+
+const { Content } = Layout;
+const { Title, Text } = Typography;
 
 const BillingPage = () => {
     const [accountId, setAccountId] = useState("");
     const [balance, setBalance] = useState<number | null>(null);
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
 
     const loadData = async () => {
         if (!accountId.trim()) {
-            setError("Please enter a valid Account ID");
+            message.warning("Please enter a valid Account ID");
             return;
         }
 
         setLoading(true);
-        setError("");
-
         try {
             const [balRes, txRes] = await Promise.all([
                 getBalance(accountId),
@@ -27,103 +29,68 @@ const BillingPage = () => {
             ]);
             setBalance(balRes.data.balance);
             setTransactions(txRes.data);
+            message.success('Billing information loaded successfully');
         } catch (err) {
-            setError("Error fetching billing information. Please check your Account ID and try again.");
+            message.error('Error fetching billing information');
             console.error("Billing data fetch error:", err);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleInputChange = (e: { target: { value: SetStateAction<string>; }; }) => {
-        setAccountId(e.target.value);
-        if (error) setError(""); // Clear error when user starts typing
-    };
-
-    const handleKeyPress = (e: { key: string; }) => {
-        if (e.key === 'Enter') {
-            loadData();
-        }
-    };
-
-    useEffect(() => {
-        if (accountId) loadData();
-    }, []);
-
     return (
-        <div className="billing-page">
-            <div className="billing-container">
-                <header className="billing-header">
-                    <h1>Billing Dashboard</h1>
-                    <p>View your account balance and transaction history</p>
-                </header>
-
-                <div className="account-input-section">
-                    <div className="input-group">
-                        <label htmlFor="accountId" className="input-label">
-                            Billing Account ID
-                        </label>
-                        <div className="input-container">
-                            <input
-                                id="accountId"
-                                type="text"
-                                className={`account-input ${error ? 'error' : ''}`}
+        <Layout>
+            <Content style={{ padding: '24px', maxWidth: 1200, margin: '0 auto' }}>
+                <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                    <Card>
+                        <Title level={2}>Billing Dashboard</Title>
+                        <Text type="secondary">View your account balance and transaction history</Text>
+                        
+                        <Space.Compact style={{ width: '100%', marginTop: 24 }}>
+                            <Input
                                 placeholder="Enter your billing account ID"
                                 value={accountId}
-                                onChange={handleInputChange}
-                                onKeyPress={handleKeyPress}
-                                disabled={loading}
+                                onChange={(e) => setAccountId(e.target.value)}
+                                onPressEnter={loadData}
+                                prefix={<SearchOutlined />}
                             />
-                            <button
-                                className={`load-button ${loading ? 'loading' : ''}`}
+                            <Button 
+                                type="primary"
                                 onClick={loadData}
-                                disabled={loading || !accountId.trim()}
+                                loading={loading}
                             >
-                                {loading ? (
-                                    <>
-                                        <span className="spinner"></span>
-                                        Loading...
-                                    </>
-                                ) : (
-                                    'Load Billing Info'
-                                )}
-                            </button>
-                        </div>
-                        {error && <div className="error-message">{error}</div>}
-                    </div>
-                </div>
+                                Load Billing Info
+                            </Button>
+                        </Space.Compact>
+                    </Card>
 
-                {balance !== null && (
-                    <div className="billing-content">
-                        <div className="balance-card">
-                            <div className="balance-header">
-                                <h2>Current Balance</h2>
-                            </div>
-                            <div className="balance-amount">
-                                ${balance?.toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }) ?? '0.00'}
-                            </div>
-                        </div>
+                    {balance !== null && (
+                        <>
+                            <Card>
+                                <Statistic
+                                    title="Current Balance"
+                                    value={balance}
+                                    precision={2}
+                                    prefix={<DollarOutlined />}
+                                />
+                            </Card>
 
-                        <div className="actions-section">
-                            <BillingActions accountId={accountId} onSuccess={loadData} />
-                        </div>
+                            <BillingActions
+                                accountId={accountId}
+                                onSuccess={loadData}
+                            />
 
-                        <div className="transactions-section">
-                            <div className="section-header">
-                                <h3>Recent Transactions</h3>
-                                <span className="transaction-count">
-                                    {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
-                                </span>
-                            </div>
-                            <TransactionsList transactions={transactions} />
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div>
+                            <Card title="Recent Transactions">
+                                <TransactionsList
+                                    transactions={transactions}
+                                    loading={loading}
+                                />
+                            </Card>
+                        </>
+                    )}
+                </Space>
+            </Content>
+        </Layout>
     );
 };
 

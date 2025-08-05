@@ -60,13 +60,13 @@ const PatientAppointments = () => {
             const res = await getAppointmentsByPatient(patientId);
             setAppointments(res.data);
 
-            const uniqueDoctorIds = Array.from(
+            const uniqueDoctorIds: string[] = Array.from(
                 new Set(res.data.map((a: { doctorId: string }) => a.doctorId))
             );
 
             const namesMap: DoctorMap = {};
             await Promise.all(
-                uniqueDoctorIds.map(async (id: string) => {
+                uniqueDoctorIds.map(async (id) => {
                     try {
                         const docRes = await getDoctorById(id);
                         namesMap[id] = docRes.data.fullName || "Unknown";

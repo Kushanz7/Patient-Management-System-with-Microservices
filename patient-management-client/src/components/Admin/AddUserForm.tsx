@@ -1,6 +1,6 @@
 import { Form, Input, Select, Button, message } from 'antd';
 import { useState } from 'react';
-import { createUser } from '../api/users';
+import { createUser } from '../../api/users.ts';
 
 interface AddUserFormProps {
     token: string;

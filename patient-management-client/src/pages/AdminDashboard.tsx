@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import {Layout, Card, Tabs, Typography, Space, Result} from 'antd';
-import { AddUserForm } from '../components/AddUserForm';
-import { DoctorsList } from '../components/DoctorsList';
+import { AddUserForm } from '../components/Admin/AddUserForm.tsx';
+import { DoctorsList } from '../components/Doctor/DoctorsList.tsx';
 import { useAuth } from '../hooks/useAuth';
-import ScheduleForm from "../components/ScheduleForm";
-import UpdateArrivalForm from "../components/UpdateArrivalForm";
+import ScheduleForm from "../components/Doctor/ScheduleForm.tsx";
+import UpdateArrivalForm from "../components/Doctor/UpdateArrivalForm.tsx";
 import { TeamOutlined, ScheduleOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;

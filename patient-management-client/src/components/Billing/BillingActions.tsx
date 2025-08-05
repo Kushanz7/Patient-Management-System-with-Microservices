@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { chargeAccount, payAccount } from "../../api/billing";
-import "./BillingActions.css";
+import { Card, InputNumber, Button, Space, message } from 'antd';
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { chargeAccount, payAccount } from '../../api/billing';
 
 type Props = {
     accountId: string;
@@ -8,54 +9,67 @@ type Props = {
 };
 
 const BillingActions = ({ accountId, onSuccess }: Props) => {
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState<number | null>(null);
+    const [loading, setLoading] = useState(false);
 
-    const handleCharge = async () => {
-        await chargeAccount(accountId, amount);
-        onSuccess();
-    };
+    const handleAction = async (action: 'charge' | 'pay') => {
+        if (!amount) {
+            message.warning('Please enter an amount');
+            return;
+        }
 
-    const handlePay = async () => {
-        await payAccount(accountId, amount);
-        onSuccess();
+        setLoading(true);
+        try {
+            if (action === 'charge') {
+                await chargeAccount(accountId, amount);
+            } else {
+                await payAccount(accountId, amount);
+            }
+            message.success(`Successfully ${action}d the account`);
+            setAmount(null);
+            onSuccess();
+        } catch (error) {
+            message.error(`Failed to ${action} the account`);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="billing-container">
-            <div className="billing-card">
-                <h2 className="billing-title">Account Balance Actions</h2>
-                <div className="input-group">
-                    <label htmlFor="amount">Amount</label>
-                    <div className="amount-input-wrapper">
-                        <span className="currency-symbol">$</span>
-                        <input
-                            id="amount"
-                            type="number"
-                            value={amount}
-                            onChange={(e) => setAmount(parseFloat(e.target.value))}
-                            placeholder="Enter amount"
-                            className="amount-input"
-                        />
-                    </div>
-                </div>
-                <div className="button-group">
-                    <button 
-                        className="button button-charge"
-                        onClick={handleCharge}
+        <Card title="Account Balance Actions">
+            <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <InputNumber
+                    prefix="$"
+                    style={{ width: '100%' }}
+                    value={amount}
+                    onChange={(value) => setAmount(value)}
+                    placeholder="Enter amount"
+                    min={0}
+                    precision={2}
+                />
+                <Space style={{ width: '100%', justifyContent: 'space-between' }}>
+                    <Button
+                        type="primary"
+                        danger
+                        icon={<ArrowUpOutlined />}
+                        onClick={() => handleAction('charge')}
+                        loading={loading}
+                        block
                     >
-                        <span className="button-icon">↑</span>
                         Charge
-                    </button>
-                    <button 
-                        className="button button-pay"
-                        onClick={handlePay}
+                    </Button>
+                    <Button
+                        type="primary"
+                        icon={<ArrowDownOutlined />}
+                        onClick={() => handleAction('pay')}
+                        loading={loading}
+                        block
                     >
-                        <span className="button-icon">↓</span>
                         Pay
-                    </button>
-                </div>
-            </div>
-        </div>
+                    </Button>
+                </Space>
+            </Space>
+        </Card>
     );
 };
 

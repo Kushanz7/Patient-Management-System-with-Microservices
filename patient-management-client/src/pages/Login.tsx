@@ -22,7 +22,7 @@ export const Login = () => {
             const { token } = await login(values);
             localStorage.setItem('token', token);
             authLogin(token);
-            navigate('/patients');
+            navigate('/adminDashboard');
         } catch (err) {
             console.error('Login failed:', err);
             setError('Invalid email or password');

@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { PatientForm } from '../components/PatientForm';
+import { PatientForm } from '../components/Patient/PatientForm.tsx';
 import { Button, Card, Space, Typography } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 

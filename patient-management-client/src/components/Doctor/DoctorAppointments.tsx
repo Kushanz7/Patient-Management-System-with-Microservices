@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import { Select, Button, List, Card, Typography, Space, message, Tag, Empty } from 'antd';
 import { SearchOutlined, ClockCircleOutlined, UserOutlined } from '@ant-design/icons';
-import { getAppointmentsByDoctor } from '../api/appointments';
-import { getDoctors } from '../api/users';
-import { AuthContext } from '../context/AuthContext';
+import { getAppointmentsByDoctor } from '../../api/appointments.ts';
+import { getDoctors } from '../../api/users.ts';
+import { AuthContext } from '../../context/AuthContext.tsx';
 import dayjs from 'dayjs';
 
 const { Text } = Typography;

@@ -1,7 +1,7 @@
 // src/components/PatientForm.tsx
 import { useState } from 'react';
 import { Form, Input, DatePicker, Button, Alert, Space } from 'antd';
-import { createPatient, type Patient } from '../api/patients';
+import { createPatient, type Patient } from '../../api/patients.ts';
 import dayjs from 'dayjs';
 
 type PatientFormProps = {

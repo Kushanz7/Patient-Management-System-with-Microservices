@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Table, message } from 'antd';
-import { getDoctors } from '../api/users';
+import { getDoctors } from '../../api/users.ts';
 import type { ColumnsType } from 'antd/es/table';
 
 interface Doctor {

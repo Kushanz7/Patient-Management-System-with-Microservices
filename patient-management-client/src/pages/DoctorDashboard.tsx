@@ -1,4 +1,4 @@
-import DoctorAppointments from '../components/DoctorAppointments';
+import DoctorAppointments from '../components/Doctor/DoctorAppointments.tsx';
 
 export default function DoctorDashboard() {
     return (

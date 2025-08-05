@@ -1,8 +1,8 @@
 import { Form, DatePicker, TimePicker, Button, Select, message } from 'antd';
-import { updateArrivalTime } from '../api/schedule';
-import { getDoctors } from '../api/users';
+import { addSchedule } from '../../api/schedule.ts';
+import { getDoctors } from '../../api/users.ts';
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext.tsx';
 
 interface Doctor {
     id: string;
@@ -10,7 +10,7 @@ interface Doctor {
     specialization: string;
 }
 
-export default function UpdateArrivalForm() {
+export default function ScheduleForm() {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -30,23 +30,22 @@ export default function UpdateArrivalForm() {
             }
         };
 
-        if (token) {
-            fetchDoctors();
-        }
+        fetchDoctors();
     }, [token]);
 
     const handleSubmit = async (values: any) => {
         setLoading(true);
         try {
-            await updateArrivalTime(
-                values.doctorId,
-                values.date.format('YYYY-MM-DD'),
-                values.arrivalTime.format('HH:mm')
-            );
-            message.success('Arrival time updated successfully');
+            const formData = {
+                doctorId: values.doctorId,
+                date: values.date.format('YYYY-MM-DD'),
+                arrivalTime: values.arrivalTime.format('HH:mm'),
+            };
+            await addSchedule(formData);
+            message.success('Schedule added successfully');
             form.resetFields();
         } catch (err) {
-            message.error('Failed to update arrival time');
+            message.error('Failed to add schedule');
         } finally {
             setLoading(false);
         }
@@ -87,16 +86,16 @@ export default function UpdateArrivalForm() {
             </Form.Item>
 
             <Form.Item
-                label="New Arrival Time"
+                label="Arrival Time"
                 name="arrivalTime"
-                rules={[{ required: true, message: 'Please select new arrival time!' }]}
+                rules={[{ required: true, message: 'Please select arrival time!' }]}
             >
                 <TimePicker style={{ width: '100%' }} format="HH:mm" />
             </Form.Item>
 
             <Form.Item>
                 <Button type="primary" htmlType="submit" loading={loading} block>
-                    Update Arrival Time
+                    Add Schedule
                 </Button>
             </Form.Item>
         </Form>

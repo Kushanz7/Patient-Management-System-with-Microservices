@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { getPatients, deletePatient, type Patient } from '../api/patients';
-import { PatientList } from '../components/PatientList';
+import { PatientList } from '../components/Patient/PatientList.tsx';
 import { Card, Button, Typography, Space, message, Alert } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
