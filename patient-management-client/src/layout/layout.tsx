@@ -65,57 +65,70 @@ const AdminLayout: React.FC = () => {
     }
   ];
 
-
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{
-        padding: '0 24px',
-        background: '#fff',
-        borderBottom: '1px solid #f0f0f0',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-      }}>
-        <h1 style={{ margin: 0, fontSize: '18px' }}>Medical Management System</h1>
-        <Button 
-          type="text" 
-          icon={<LogoutOutlined />} 
-          onClick={logout}
-          style={{ fontSize: '16px' }}
-        >
-          Logout
-        </Button>
-      </Header>
-      <Layout>
-        <Sider
-          width={250}
-          style={{
-            background: '#fff',
-            borderRight: '1px solid #f0f0f0'
-          }}
-        >
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['patients-list']}
-            defaultOpenKeys={['patients']}
-            style={{ height: '100%', borderRight: 0 }}
-            items={menuItems}
-          />
-        </Sider>
-        <Layout style={{ padding: '24px' }}>
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              background: '#fff',
-              borderRadius: '4px'
-            }}
+      <Layout style={{ minHeight: '100vh' }}>
+        <Header style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          padding: '0 24px',
+          background: '#fff',
+          borderBottom: '1px solid #f0f0f0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: '64px'
+        }}>
+          <h1 style={{ margin: 0, fontSize: '18px' }}>Medical Management System</h1>
+          <Button
+              type="text"
+              icon={<LogoutOutlined />}
+              onClick={logout}
+              style={{ fontSize: '16px' }}
           >
-            <Outlet />
-          </Content>
+            Logout
+          </Button>
+        </Header>
+        <Layout style={{ marginTop: '64px' }}>
+          <Sider
+              width={250}
+              style={{
+                position: 'fixed',
+                left: 0,
+                top: '64px',
+                bottom: 0,
+                zIndex: 999,
+                background: '#fff',
+                borderRight: '1px solid #f0f0f0',
+                overflow: 'auto'
+              }}
+          >
+            <Menu
+                mode="inline"
+                defaultSelectedKeys={['patients-list']}
+                defaultOpenKeys={['patients']}
+                style={{ height: '100%', borderRight: 0 }}
+                items={menuItems}
+            />
+          </Sider>
+          <Layout style={{ marginLeft: '250px' }}>
+            <Content
+                style={{
+                  padding: '24px',
+                  margin: 0,
+                  background: '#fff',
+                  borderRadius: '4px',
+                  minHeight: 'calc(100vh - 64px)',
+                  overflow: 'auto'
+                }}
+            >
+              <Outlet />
+            </Content>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
   );
 };
 

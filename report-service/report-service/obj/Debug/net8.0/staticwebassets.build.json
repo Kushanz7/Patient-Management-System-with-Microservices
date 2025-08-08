@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "fEBnJ6NglUmvHrNXJR7x4omfY9xcE0xS1FUelfCbuhw=",
+  "Source": "report-service",
+  "BasePath": "_content/report-service",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

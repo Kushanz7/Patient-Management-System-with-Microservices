@@ -1,0 +1,135 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "R:\\Personal\\patient-management\\report-service\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|r:\\personal\\patient-management\\report-service\\report-service\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|solutionrelative:report-service\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|r:\\personal\\patient-management\\report-service\\report-service\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|solutionrelative:report-service\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|r:\\personal\\patient-management\\report-service\\report-service\\kafka\\kafkaconsumerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|solutionrelative:report-service\\kafka\\kafkaconsumerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|r:\\personal\\patient-management\\report-service\\report-service\\models\\patientevententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|solutionrelative:report-service\\models\\patientevententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|r:\\personal\\patient-management\\report-service\\report-service\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|solutionrelative:report-service\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|r:\\personal\\patient-management\\report-service\\report-service\\data\\reportdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|solutionrelative:report-service\\data\\reportdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|r:\\personal\\patient-management\\report-service\\report-service\\services\\reportservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DF80974-0935-43F0-A157-E841898F3632}|report-service\\report-service.csproj|solutionrelative:report-service\\services\\reportservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "R:\\Personal\\patient-management\\report-service\\report-service\\Dockerfile",
+              "RelativeDocumentMoniker": "report-service\\Dockerfile",
+              "ToolTip": "R:\\Personal\\patient-management\\report-service\\report-service\\Dockerfile",
+              "RelativeToolTip": "report-service\\Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-07-12T22:00:34.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "docker-compose.yml",
+              "DocumentMoniker": "R:\\Personal\\patient-management\\report-service\\report-service\\docker-compose.yml",
+              "RelativeDocumentMoniker": "report-service\\docker-compose.yml",
+              "ToolTip": "R:\\Personal\\patient-management\\report-service\\report-service\\docker-compose.yml",
+              "RelativeToolTip": "report-service\\docker-compose.yml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2025-07-12T21:56:53.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ReportService.cs",
+              "DocumentMoniker": "R:\\Personal\\patient-management\\report-service\\report-service\\Services\\ReportService.cs",
+              "RelativeDocumentMoniker": "report-service\\Services\\ReportService.cs",
+              "ToolTip": "R:\\Personal\\patient-management\\report-service\\report-service\\Services\\ReportService.cs",
+              "RelativeToolTip": "report-service\\Services\\ReportService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-12T19:15:15.735Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ReportDbContext.cs",
+              "DocumentMoniker": "R:\\Personal\\patient-management\\report-service\\report-service\\Data\\ReportDbContext.cs",
+              "RelativeDocumentMoniker": "report-service\\Data\\ReportDbContext.cs",
+              "ToolTip": "R:\\Personal\\patient-management\\report-service\\report-service\\Data\\ReportDbContext.cs",
+              "RelativeToolTip": "report-service\\Data\\ReportDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-12T19:14:46.23Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PatientEventEntity.cs",
+              "DocumentMoniker": "R:\\Personal\\patient-management\\report-service\\report-service\\Models\\PatientEventEntity.cs",
+              "RelativeDocumentMoniker": "report-service\\Models\\PatientEventEntity.cs",
+              "ToolTip": "R:\\Personal\\patient-management\\report-service\\report-service\\Models\\PatientEventEntity.cs",
+              "RelativeToolTip": "report-service\\Models\\PatientEventEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-12T19:14:07.457Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ReportsController.cs",
+              "DocumentMoniker": "R:\\Personal\\patient-management\\report-service\\report-service\\Controllers\\ReportsController.cs",
+              "RelativeDocumentMoniker": "report-service\\Controllers\\ReportsController.cs",
+              "ToolTip": "R:\\Personal\\patient-management\\report-service\\report-service\\Controllers\\ReportsController.cs",
+              "RelativeToolTip": "report-service\\Controllers\\ReportsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-12T19:13:24.212Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "KafkaConsumerService.cs",
+              "DocumentMoniker": "R:\\Personal\\patient-management\\report-service\\report-service\\Kafka\\KafkaConsumerService.cs",
+              "RelativeDocumentMoniker": "report-service\\Kafka\\KafkaConsumerService.cs",
+              "ToolTip": "R:\\Personal\\patient-management\\report-service\\report-service\\Kafka\\KafkaConsumerService.cs",
+              "RelativeToolTip": "report-service\\Kafka\\KafkaConsumerService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-12T19:12:41.492Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
